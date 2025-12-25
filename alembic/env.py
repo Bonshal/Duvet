@@ -4,7 +4,8 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from app.db.base import Base
 from app.models import user
-
+from app.models.user import User
+from app.models.product import Product
 from dotenv import load_dotenv
 import os
 import sys
