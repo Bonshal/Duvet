@@ -1,0 +1,8 @@
+requests
+beautifulsoup4
+sqlalchemy
+psycopg2-binary
+sentence-transformers
+python-dotenv
+# We need to install the local app as a package or ensure path is correct
+# For simple scripts, just deps are enough.

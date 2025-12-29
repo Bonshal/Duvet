@@ -1,0 +1,38 @@
+name: Daily Skincare Scraper
+
+on:
+  schedule:
+    # Runs at 03:00 UTC every day
+    - cron: '0 3 * * *'
+  # Allows you to click "Run Now" button manually for testing
+  workflow_dispatch:
+
+jobs:
+  scrape_and_embed:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Download your code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # 2. Install Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # 3. Install Dependencies
+      - name: Install Libraries
+        run: |
+          pip install -r scraper/requirements.txt
+          # We also need these because your scraper imports app.models
+          pip install fastapi pydantic pgvector
+
+      # 4. Run the Scraper
+      - name: Run Scraper Module
+        env:
+          # We inject the secret database URL here
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PYTHONPATH: .
+        run: python -m scraper.main
